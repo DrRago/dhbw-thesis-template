@@ -1,8 +1,19 @@
-image: blang/latex
 
-build:
+compile-pdf:
+  stage: build
+  image: blang/latex
   script:
     - pdflatex bericht.tex
   artifacts:
     paths:
       - "*.pdf"
+
+pages:
+  stage: deploy
+  script:
+    - mkdir public
+    - cp requirements/*.pdf public
+    - cd public
+  artifacts:
+    paths: 
+      - public

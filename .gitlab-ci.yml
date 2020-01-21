@@ -2,7 +2,7 @@ image: blang/latex
 
 build:
   script:
-    - latexmk bericht.tex -pdf
+    - pdflatex bericht.tex
   artifacts:
     paths:
       - "*.pdf"

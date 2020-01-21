@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Description:     Template for reports at DHBW Kalrsuhe
+%% Author:          Leonhard Gahr <leonhard.gahr@gmail.com>
+%%  -*- coding: utf-8 -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+   ngerman, % new German spelling
+   a4paper, % paper size
+% ,twoside % Zweiseitiger Druck (rechts/links)
+   11pt,
+   pdftex,
+%  disable % Todo-Markierungen auschalten
+]{report}
+
+\usepackage[utf8]{inputenc}        % UTF-8 coding
+\usepackage[english,german]{babel}
+
+\usepackage{bericht}
+\usepackage{lipsum}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Information of the paper
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Autor}{Leonhard Gahr}
+\newcommand{\MatrikelNummer}{8858650}
+\newcommand{\Kursbezeichnung}{TINF18B4}
+
+\newcommand{\FirmenName}{Siemens AG}
+\newcommand{\FirmenStadt}{Karlsruhe}
+\newcommand{\FirmenLogoDeckblatt}{\includegraphics[width=5cm]{img/sie-logo.png}}
+
+\newcommand{\BetreuerFirma}{Christian Maul}
+\newcommand{\BetreuerDHBW}{Prof. Dr. Jörn Eisenbiegler}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Was}{Projektrarbeit}
+%\newcommand{\Was}{Studienarbeit}
+%\newcommand{\Was}{Bachleorarbeit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Titel}{\LaTeX-Vorlage für diverse Ausarbeitunge}
+\newcommand{\AbgabeDatum}{1. April 2090}
+
+\newcommand{\Dauer}{12 Wochen}
+
+\newcommand{\Abschluss}{Bachelor of Science}
+
+\newcommand{\Studiengang}{Informatik / Angewandte Informatik}
+
+\hypersetup{
+  pdfauthor={\Autor},
+  pdftitle={\Titel},
+  pdfsubject={\Was}
+}
+
+\newenvironment{abstractpage}
+  {\cleardoublepage\vspace*{\fill}\thispagestyle{empty}}
+  {\vfill\cleardoublepage}
+\newenvironment{myabstract}[1]
+  {\bigskip\selectlanguage{#1}%
+   \begin{center}\bfseries\abstractname\end{center}}
+  {\par\bigskip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliography{bericht}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{-2cm}
+        \FirmenLogoDeckblatt\hfill\includegraphics[width=4cm]{img/dhbw-logo}\\[2cm]
+        {\Huge \Titel}\\[1cm]
+        {\Huge\scshape \Was}\\[1cm]
+        {\large für die Prüfung zum}\\[0.5cm]
+        {\Large \Abschluss}\\[0.5cm]
+        {\large des Studienganges \Studiengang}\\[0.5cm]
+        {\large an der}\\[0.5cm]
+        {\large Dualen Hochschule Baden-Württemberg Karlsruhe}\\[0.5cm]
+        {\large von}\\[0.5cm]
+        {\large\bfseries \Autor}\\[1cm]
+        {\large Abgabedatum \AbgabeDatum}
+        \vfill
+    \end{center}
+    \begin{tabular}{l@{\hspace{2cm}}l}
+        Bearbeitungszeitraum	         & \Dauer 			\\
+        Matrikelnummer	                 & \MatrikelNummer		\\
+        Kurs			         & \Kursbezeichnung		\\
+        Ausbildungsfirma	         & \FirmenName			\\
+        			         & \FirmenStadt			\\
+        Betreuer der Ausbildungsfirma	 & \BetreuerFirma		\\
+        Gutachter der Studienakademie	 & \BetreuerDHBW		\\
+    \end{tabular}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{secondary/erklaerung}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% abstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstractpage}
+\begin{myabstract}{german}
+    \lipsum[1]
+\end{myabstract}
+
+\begin{myabstract}{english}
+    \lipsum[1]
+\end{myabstract}
+\end{abstractpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\listoffigures
+\listoftables
+\lstlistoflistings
+\listofequations
+
+% begin of chapters
+\include{secondary/abbr}
+\include{chapters/1_introduction}
+\include{chapters/2_basics}
+
+% begin of appendix
+\appendix
+\addcontentsline{toc}{chapter}{Anhang}
+
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLATEX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\refname{Literaturverzeichnis}
+\printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{secondary/changelog}
+
+\newpage
+\addcontentsline{toc}{chapter}{Liste der ToDo's}
+\listoftodos[Liste der ToDo's]
+
+\end{document}

@@ -1,4 +1,3 @@
-
 compile-pdf:
   stage: build
   image: blang/latex
@@ -12,7 +11,7 @@ pages:
   stage: deploy
   script:
     - mkdir public
-    - cp requirements/*.pdf public
+    - cp *.pdf public
     - cd public
   artifacts:
     paths: 

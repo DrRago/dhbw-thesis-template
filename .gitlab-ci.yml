@@ -1,7 +1,6 @@
 compile-pdf:
   stage: build
   image: aergus/latex
-
   script:
     - make
   artifacts:

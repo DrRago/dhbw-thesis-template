@@ -1,31 +1,22 @@
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# %% Descr:       Vorlage fuer Berichte der DHBW-Karlsruhe, Makefile
-# %% Author:      Prof. Dr. Juergen Vollmer, vollmer@dhbw-karlsruhe.de
-# %% $Id: Makefile,v 1.19 2017/10/06 14:08:58 vollmer Exp $
-# %% -*- coding: utf-8 -*-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-# Dateiname der Haupt-Datei
+# filename of base file
 BASE  = bericht
 
 LATEX     = pdflatex -file-line-error
 BIBTEX    = bibtex
 MAKEINDEX = makeindex -s $(BASE).ist
 
-# Wo werden die diversen Dateien gesucht:
-# Ein // am Ende bedeutet: in allen Unterverzeichnissen
-# BIBTEX-Style Files (*.bst)
+# BIBTEX-Style files (*.bst)
 export BSTINPUTS := .//:$(BSTINPUTS)
 
-# BIBTEX Datenbank(en) (*.bib)
+# BIBTEX databases (*.bib)
 export BIBINPUTS := .//:$(BIBINPUTS)
 
-# LaTeX Styles und Klassen (*.sty, *.cls)
+# LaTeX styles and classes (*.sty, *.cls)
 export TEXINPUTS := .//:$(TEXINPUTS)
 
 all: $(BASE).pdf
 
-$(BASE).pdf: *.tex *.bib Makefile.
+$(BASE).pdf: *.tex *.bib Makefile
 	$(MAKE) clean
 	$(LATEX)  $(BASE).tex
 	- grep -q "Warning: Citation " $*.log && $(BIBTEX)    $(BASE)
@@ -45,30 +36,24 @@ index:
 bib:
 	$(BIBTEX) $(BASE)
 
-# Nur Fehlermeldungen ausgeben
+# print only error messages
 check: $(BASE).pdf
 	@echo; echo "*******************************"; echo; echo;
 	$(LATEX) -interaction=nonstopmode $(BASE).tex 2>&1  | egrep "LaTeX Warning";	\
 	if [ $$? -ne 0 ]; then exit 0; else exit 1; fi
 
-# Die Datei "Makefile." muss unter Linux existieren, da ProTexT (Windows)
-# einen Bug hat, der verhindert, dass eine Datei ohne einen Punkt mittels
-# des listings-Paketets inkludiert werden kann. (Siehe "kapitel2.tex")
-Makefile. : Makefile
-	ln -s Makefile Makefile.
-
-# Hilfsdateien loeschen
+# remove build files
 clean:
 	rm -f *.toc *.dvi *.aux *.log *.blg *.bbl *.out *.for   \
 	      *.lof *.lol *.lot *.bcf *.run.xml *-blx.bib *.idx \
 	      *.ind *.ilg *.blg *.tdo				\
 	      *~
 
-# Wirklich alles loeschen
+# the other one just pretended to clean, this does for sure
 realclean: clean
 	rm -f $(BASE).pdf
 
-# Erstelle tar-Archiv des ganzen Verzeichnisses
+# create tar archive of project
 tar: $(BASE).pdf
 	$(MAKE) clean
 	D=`pwd`; D=`basename $$D`;		\

@@ -1,233 +1,183 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Description:     Template for reports at DHBW Kalrsuhe
-%% Author:          Leonhard Gahr <leonhard.gahr@gmail.com>
-%%  -*- coding: utf-8 -*-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%! Author = Leonhard Gahr <leonhard.gahr@gmail.com>
+%! Date = 22/01/20
+%! Info = Tx000_template
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{bericht}[2017/10/06 v1.2]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% needed packages
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[T1]{fontenc}% Interne LaTeX Codierungen
-\usepackage[dvipsnames,table]{xcolor} % Extending L A TEX’s color facilities
-\usepackage{csquotes}   % Context sensitive quotation facilities.
-\usepackage{babel}      % Sprachanpassungen für generierte Texte wie "Inhaltsverzeichnis" etc
-\usepackage{xspace}     % http://www.ctan.org/tex-archive/help/Catalogue/entries/xspace.html
-\usepackage{array}      % http://www.ctan.org/tex-archive/help/Catalogue/entries/array.html
-\usepackage{tabularx}   % http://www.ctan.org/tex-archive/help/Catalogue/entries/tabularx.html
-\usepackage{eurosym}    % \euro
-\usepackage{pdfpages}   % http://www.ctan.org/tex-archive/help/Catalogue/entries/pdfpages.html
-\usepackage{needspace}  % http://www.tex.ac.uk/cgi-bin/texfaq2html?label=nopagebrk
+% required packages
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{xspace}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{eurosym}
+\usepackage{pdfpages}
+\usepackage{needspace}
 \usepackage[bookmarksopen,bookmarksnumbered]{hyperref}
-\usepackage{bookmark}   % Bookmarks for hyperref
+\usepackage{bookmark} % Bookmarks for hyperref
 \usepackage{graphicx}
 \usepackage[headings]{fullpage}
 \usepackage{fancyhdr}
 \usepackage{url}
-\usepackage{microtype}  % http://tug.ctan.org/tex-archive/macros/latex/contrib/microtype/
-\usepackage{lmodern}    % Computern-Modern Schriftfamilie
-\usepackage{amssymb}    % Symbole
-\usepackage{framed}     % Framed or shaded regions that can break across pages.
-		        % http://dante.ctan.org/tex-archive/help/Catalogue/entries/framed.html
-			% Benutzung siehe erklaerung.tex
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{framed}
 
-\usepackage{wrapfig}    % Bilder von textumfliessen lassen
+\usepackage{wrapfig}
 \usepackage{varioref}
 
-\usepackage{xcolor}
 \definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
 \definecolor{keywordsColor}{rgb}{0.000000, 0.000000, 0.635294}
 \definecolor{stringColor}{rgb}{0.558215, 0.000000, 0.135316}
 
 \usepackage[colorinlistoftodos]{todonotes}
-                        % Einfache Verwaltung und Erstellung von TODO's Markierungen
-			% http://tug.ctan.org/tex-archive/macros/latex/contrib/todonotes/
-			% wichtige Paket-Optionen: disable
-
-\usepackage{makeidx}    % Erstellung eines Indexes
+\usepackage{makeidx}
 \makeindex
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% eigene Macros
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% custom commands
 \newcommand{\email}[1]{\href{mailto:#1}{\textless#1\textgreater}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% citation, bibliography, BIBLATEX
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Wer etwas mehr "Kontrolle" über das Aussehen der Referenzen haben möchte, kann
-% auch das "biblatex"-Paket benutzen.
-\usepackage{etoolbox}  % http://dante.ctan.org/tex-archive/help/Catalogue/entries/etoolbox.html
+% citation, bibliography, BIBTEX
+\usepackage{etoolbox}
 \usepackage[
-	hyperref=true,          % Klickbare Referenzen in der PDF-Datei
-        backref=true,           % In der Literaturref. die Seiten angeben, wo ein \cite dazu steht
-        bibencoding=inputenc,   % s. inputenc-Paket
-	style=authoryear-comp,
-        backend=bibtex,
-	sorting=nty]{biblatex}  % http://dante.ctan.org/tex-archive/help/Catalogue/entries/biblatex.html
+hyperref=true,
+backref=true,
+bibencoding=inputenc,
+style=authoryear-comp,
+backend=bibtex,
+sorting=nty]{biblatex}
 \renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
 
-% Abstand der einzelnen Einträge in der Literaturangaben
+% margin of items in references
 \renewcommand{\bibitemsep}{1ex}
 
-% Welche Klammern soll \parencite{..} benutzen?
+% parentheses of \parencite{..}?
 \renewcommand{\bibleftparen}{[}
 \renewcommand{\bibrightparen}{]}
 
-% biblatex's \cite{..} gibt "normalerweise" keine Klammern um die Referenz aus
-% \parencite{..} gibt Klammern aus (die oben definiert sind)
-% Damit das "normale" Verhalten andere BibTeX-Stile realisiert wird, d.h. \cite{..}
-% gibt Klammen aus, wird folgendes definiert:
-% "Merke" ursprünliche Definition unter neuem Namen
 \let\citeNoParen\cite
-% "Redefiniere" \cite:
 \let\cite\parencite
 
-% Meine speziellen \cite-Kommandos:
-% Ausgabe des Untertitels (SUBTITLE) Feldes einer Referenz
+% custom\cite-commands:
+% print subtitle of a fields reference
 \DeclareCiteCommand{\citesubtitle}
-  {\boolfalse{citetracker}%
-   \boolfalse{pagetracker}%
-   \usebibmacro{prenote}}
-  {\indexfield{indextitle}%
-   \printfield[citetitle]{subtitle}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+{\boolfalse{citetracker}
+\boolfalse{pagetracker}
+\usebibmacro{prenote}}
+{\indexfield{indextitle}
+\printfield[citetitle]{subtitle}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
 
-% Ausgabe des Titels (TITLE) Feldes und der Referenz
+% print title of a fields reference
 \DeclareCiteCommand{\citetitleref}
-  {\booltrue{citetracker}%
-   \booltrue{pagetracker}%
-   \usebibmacro{prenote}}
-  {\indexfield{indextitle}%
-   \printfield[citetitle]{title} \cite{\thefield{entrykey}}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+{\booltrue{citetracker}
+\booltrue{pagetracker}
+\usebibmacro{prenote}}
+{\indexfield{indextitle}
+\printfield[citetitle]{title} \cite{\thefield{entrykey}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
 
-% wie citetitleref, nur als Fussnote
+% like \citetitleref, but as footer
 \DeclareCiteCommand{\citetitlerefFootnote}
-  {}
-  {\footnote{\citetitleref{\thefield{entrykey}}}}
-  {}
-  {}
+{}
+{\footnote{\citetitleref{\thefield{entrykey}}}}
+{}
+{}
 
 
-% Ausgabe der URL im HOWPUBLISHED Feld
-% Referenzieren von URL's, Format in der *.bib-Datei
-%@MISC{key,
-%  AUTHOR	= "....",
-%  TITLE	= "Webseite....",
-%  HOWPUBLISHED = "\url{http://www.domain.tld}",
-%  YEAR		= YYYY,    % Jahr  der Einsichtname, YYYY = Jahreszahl 4 Stellog
-%  MONTH	= ABC      % Monat der Einsichtnahme (jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov. dec
-%}
+% print the URL (HOWPUBLISHED-field)
 \DeclareCiteCommand{\citeurl}
-  {\booltrue{citetracker}%
-   \booltrue{pagetracker}%
-   \usebibmacro{prenote}}
-  {\indexfield{indextitle}%
-   \printfield[citetitle]{howpublished}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+{\booltrue{citetracker}
+\booltrue{pagetracker}
+\usebibmacro{prenote}}
+{\indexfield{indextitle}
+\printfield[citetitle]{howpublished}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
 
-% Ausgabe der URL im HOWPUBLISHED Feld und Referenz
+% print the URL (reference)
 \DeclareCiteCommand{\citeurlref}
-  {\booltrue{citetracker}%
-   \booltrue{pagetracker}%
-   \usebibmacro{prenote}}
-  {\indexfield{indextitle}%
-   \printfield[citetitle]{howpublished} \cite{\thefield{entrykey}}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+{\booltrue{citetracker}
+\booltrue{pagetracker}
+\usebibmacro{prenote}}
+{\indexfield{indextitle}
+\printfield[citetitle]{howpublished} \cite{\thefield{entrykey}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
 
-% Augabe: Vorname Nachname des Autors
+% print given name of author
 \DeclareCiteCommand{\citefullauthor}
-  {\booltrue{citetracker}%
-   \booltrue{pagetracker}%
-   \usebibmacro{prenote}}
-  {\indexfield{indextitle}%
-    \textsc{\printnames[byeditor]{author}}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+{\booltrue{citetracker}
+\booltrue{pagetracker}
+\usebibmacro{prenote}}
+{\indexfield{indextitle}
+\textsc{\printnames[byeditor]{author}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Programmlistings setzen
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{listings}   % http://www.ctan.org/tex-archive/macros/latex/contrib/listings/
+% algorithm-listings
+\usepackage{listings}
 
-% Wie sollen die Überschriften benannt werden:
+% header of lisings
 \renewcommand{\lstlistingname}{Algorithmus}
 
-% Wie die Liste der Listings, s. \lstlistoflistings in bericht.tex
+% header of lisings-list
 \renewcommand{\lstlistlistingname}{Liste der Algorithmen}
 
-% So kann man einen Stil für alle  Algorithmen definieren
+% style template
 \lstdefinestyle{algoBericht}{
- backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
-  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{commentsColor}\textit,    % comment style
-  deletekeywords={...},            % if you want to delete keywords from the given language
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-  frame=tb,	                   	   % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{keywordsColor}\bfseries,       % keyword style
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{commentsColor}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{stringColor}, % string literal style
-  tabsize=2,	                   % sets default tabsize to 2 spaces
-  title=\lstname,                  % show the filename of files included with \lstinputlisting; also try caption instead of title
-  columns=fixed
+backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+breaklines=true,                 % sets automatic line breaking
+captionpos=b,                    % sets the caption-position to bottom
+commentstyle=\color{commentsColor}\textit,    % comment style
+deletekeywords={...},            % if you want to delete keywords from the given language
+escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+frame=tb,                           % adds a frame around the code
+keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+keywordstyle=\color{keywordsColor}\bfseries,       % keyword style
+numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+numbersep=5pt,                   % how far the line-numbers are from the code
+numberstyle=\tiny\color{commentsColor}, % the style that is used for the line-numbers
+rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+showstringspaces=false,          % underline spaces within strings only
+showtabs=false,                  % show tabs within strings adding particular underscores
+stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+stringstyle=\color{stringColor}, % string literal style
+tabsize=2,                       % sets default tabsize to 2 spaces
+title=\lstname,                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+columns=fixed
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Abkürzungen, http://www.ctan.org/tex-archive/macros/latex/contrib/acronym/
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% abbreviations
 \usepackage[printonlyused,withpage]{acronym}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Formelverzeichnis, Dank an Andy Nöltner <ANoeltner@lstelcom.com>
-% Leider versursacht float zusammen mit Hyperref Warnungen
-% siehe http://www.tex.ac.uk/cgi-bin/texfaq2html?label=hyperdupdest
-% Wenn also das Formelverzeichnis nicht benötigt, dann das folgende
-% auskommentieren
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% list of formulas - comment out if not needed
 \usepackage{float}
 \newfloat{eq}{H}{for}[chapter]
 \newcommand{\forname}{Formelverzeichnis}
 \newcommand{\listofequations}{\listof{eq}{\forname}}
 
 \newcommand{\eqlabel}[2]{
-        \label{#1}
-        \addcontentsline{for}{eq}{(\ref{#1}) #2}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{#1}
+\addcontentsline{for}{eq}{(\ref{#1}) #2}}
 
 % Definitionen mit Ausgabe im Index
 % gibt #2 aus und fügt #1 bzw. #2 (wenn #1 nicht angegeben) in den Index ein
 \newcommand{\Def}[2][]{%
-   \def\OPTARG{#1}%
-   \def\EMPTY{}%
-   \ifx\OPTARG\EMPTY\index{#2}\else\index{#1}\fi%
-   \textbf{#2}\xspace%
+\def\OPTARG{#1}%
+\def\EMPTY{}%
+\ifx\OPTARG\EMPTY\index{#2}\else\index{#1}\fi%
+\textbf{#2}\xspace%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \endinput
-%%
-%% End of file `bericht.sty'.

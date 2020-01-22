@@ -1,25 +1,16 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Descr:       Vorlage für Berichte der DHBW-Karlsruhe, Datei mit Abkürzungen
-%% Author:      Prof. Dr. Jürgen Vollmer, vollmer@dhbw-karlsruhe.de
-%% $Id: abk.tex,v 1.4 2017/10/06 14:02:03 vollmer Exp $
-%% -*- coding: utf-8 -*-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%! Author = Leonhard Gahr <leonhard.gahr@gmail.com>
+%! Date = 22/01/20
+%! Info = Tx000_template
 
-\chapter*{Abkürzungsverzeichnis}                   % chapter*{..} -->   keine Nummer, kein "Kapitel"
-						         % Nicht ins Inhaltsverzeichnis
-% \addcontentsline{toc}{chapter}{Akürzungsverzeichnis}   % Damit das doch ins Inhaltsverzeichnis kommt
+\chapter*{Abkürzungsverzeichnis}
+% \addcontentsline{toc}{chapter}{Akürzungsverzeichnis}   % add to table of contents
 
-% Hier werden die Abkürzungen definiert
 \begin{acronym}[DHBW]
-  % \acro{Name}{Darstellung der Abkürzung}{Langform der Abkürzung}
- \acro{Abk}[Abk.]{Abkürzung}
+    % \acro{name}{presentation}{long-presentation}
+    \acro{Abk}[Abk.]{Abkürzung}
 
- % Folgendes benutzen, wenn der Plural einer Abk. benöigt wird
- % \newacroplural{Name}{Darstellung der Abkürzung}{Langform der Abkürzung}
- \newacroplural{Abk}[Abk-en]{Abkürzungen}
+    % \newacroplural{name}{presentation}{long-presentation}
+    \newacroplural{Abk}[Abk-en]{Abkürzungen}
 
- \acro{H2O}[\ensuremath{H_2O}]{Di-Hydrogen-Monoxid}
-
- % Wenn neicht benutzt, erscheint diese Abk. nicht in der Liste
- \acro{NUA}{Not Used Acronym}
+    \acro{H2O}[\ensuremath{H_2O}]{Di-Hydrogen-Monoxid}
 \end{acronym}

@@ -3,7 +3,7 @@ compile-pdf:
   image: aergus/latex
 
   script:
-    - pdflatex bericht.tex
+    - make
   artifacts:
     paths:
       - "*.pdf"

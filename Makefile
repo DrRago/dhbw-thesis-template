@@ -14,6 +14,13 @@ export BIBINPUTS := .//:$(BIBINPUTS)
 # LaTeX styles and classes (*.sty, *.cls)
 export TEXINPUTS := .//:$(TEXINPUTS)
 
+# determine remove command for OS
+ifdef OS
+	RM = del /Q /f /s
+else
+	RM = rm -f
+endif
+
 all: $(BASE).pdf
 
 $(BASE).pdf: *.tex *.bib Makefile
@@ -44,14 +51,14 @@ check: $(BASE).pdf
 
 # remove build files
 clean:
-	rm -f *.toc *.dvi *.aux *.log *.blg *.bbl *.out *.for   \
+	$(RM) *.toc *.dvi *.aux *.log *.blg *.bbl *.out *.for   \
 	      *.lof *.lol *.lot *.bcf *.run.xml *-blx.bib *.idx \
 	      *.ind *.ilg *.blg *.tdo				\
 	      *~
 
 # the other one just pretended to clean, this does for sure
 realclean: clean
-	rm -f $(BASE).pdf
+	$(RM) $(BASE).pdf
 
 # create tar archive of project
 tar: $(BASE).pdf
